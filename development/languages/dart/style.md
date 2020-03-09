@@ -1,3 +1,4 @@
+<!--
 Dart style guide
 ================
 
@@ -5,7 +6,15 @@ The Fuchsia project follows the guidelines in [Effective Dart][effective-dart],
 but with some additions.
 
 All code must be formatted using `dartfmt` before being checked in.
+-->
+Dart 代码格式指南
+================
 
+Fuchsia 项目遵循 [Effective Dart][effective-dart] 代码格式，还有一些额外的要求。
+
+所有代码在审查前都必须使用 `dartfmt` 进行格式化。
+
+<!--
 # Additional Style Rules
 
 ### DON'T follow the Flutter repository style guide.
@@ -15,13 +24,25 @@ framework itself. It is not intended as style guidance for projects using
 Flutter. All code in the Fuchsia repository should follow the standard
 Dart style. Although we are not following the style, the Flutter's guide on
 documentation and development is still useful.
+-->
+# 额外的格式规则
 
+### 不要按照 Flutter 代码格式编写
+
+Flutter 代码格式只适用于 Flutter 框架自身，并不是意图作为全部使用 Flutter 项目的代码格式标准。在 Fuchsia 中，全部代码应遵循标准 Dart 代码格式。另外，即便我们不按照规定格式编写，Flutter 的指南文档和开发依然有效。
+
+<!-- 
 ### DO use trailing commas on all tree structures longer than one line.
 
 Without trailing commas, code that builds widget trees or similar types of
 code tends to be hard to read. Adding the trailing commas allows `dartfmt`
 to do its job correctly.
+-->
+### 对全部超过一行的树状结构使用尾部逗号
 
+不使用尾部逗号，构建部件树的代码与类型相似的代码往往可读性很低。添加尾部逗号可以让 `dartfmt` 正确地工作。（例如格式化为层次有致的部件树）
+
+<!--
 #### Without trailing commas:
 ``` dart
 children.add(Expanded(
@@ -43,9 +64,40 @@ children.add(Expanded(
    ),
 ));
 ```
+-->
 
+#### 不使用尾部逗号:
+``` dart
+children.add(Expanded(
+  child: Center(
+      child: Container(
+          width: 64.0, height: 64.0, child: FuchsiaSpinner())),
+));
+```
+
+#### 使用尾部逗号:
+``` dart
+children.add(Expanded(
+  child: Center(
+      child: Container(
+        width: 64.0,
+        height: 64.0,
+        child: FuchsiaSpinner(),
+      ),
+   ),
+));
+```
+
+<!--
 ### DO order members using the Dart Analyzer.
 In Visual Studio Code, this is the Dart: Organize Members command available
+in the Command Palette. (Control+Shift+P or View -> Command Palette)
+
+This formatter doesn’t appear to be available outside of the supported IDEs.
+-->
+
+### DO order members using the Dart Analyzer.
+在 Visual Studio Code 中, this is the Dart: Organize Members command available
 in the Command Palette. (Control+Shift+P or View -> Command Palette)
 
 This formatter doesn’t appear to be available outside of the supported IDEs.
