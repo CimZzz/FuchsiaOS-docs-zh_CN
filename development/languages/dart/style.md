@@ -201,7 +201,7 @@ import 'package:plants/botanical_fruits.dart' show Orange;
 
 如果分布在多个文件内的类被同时使用，对于库的使用者来说，导入单个文件比多次导入更加便利。使用者可以随时使用 `show` 关键字来所缩小导入范围
 
-这样也对最小化可见成员有所帮助
+这样也对减少公共成员有所帮助
 
 例如:
 ``` dart
@@ -217,7 +217,7 @@ class Tomato {}
 
 /// In botanical_fruits.dart
 export 'src/apple.dart';
-export 'src/orange.dart';
+export 'src/orange.dart';`
 // Can also be: export 'src/veggies.dart' hide Potato;
 export 'src/veggies.dart' show Tomato;
 
