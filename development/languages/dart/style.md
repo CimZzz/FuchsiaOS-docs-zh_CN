@@ -1,4 +1,5 @@
 <!--
+
 Dart style guide
 ================
 
@@ -7,6 +8,7 @@ but with some additions.
 
 All code must be formatted using `dartfmt` before being checked in.
 -->
+
 Dart 代码格式指南
 ================
 
@@ -15,6 +17,7 @@ Fuchsia 项目遵循 [Effective Dart][effective-dart] 代码格式，还有一�
 所有代码在审查前都必须使用 `dartfmt` 进行格式化。
 
 <!--
+
 # Additional Style Rules
 
 ### DON'T follow the Flutter repository style guide.
@@ -96,18 +99,25 @@ in the Command Palette. (Control+Shift+P or View -> Command Palette)
 This formatter doesn’t appear to be available outside of the supported IDEs.
 -->
 
-### DO order members using the Dart Analyzer.
-在 Visual Studio Code 中, this is the Dart: Organize Members command available
-in the Command Palette. (Control+Shift+P or View -> Command Palette)
+### 使用 Dart Analyzer
 
-This formatter doesn’t appear to be available outside of the supported IDEs.
+在 Visual Studio Code 中, 可以在命令面板中使用 dart 的相关命令 (Control+Shift+P or View -> Command Palette)
 
+除支持的 IDE 工具之外，此格式化程序有可能无法使用
+
+<!-- 
 ### PREFER to keep lines below 80 characters unless it would be more readable.
 This is a slight amendment from the general Dart [rule][dartstyle-80-chars].
 Unlike that rule, it is fine to have lines above 80 characters in the Fuchsia
 repository, as long as it improves readability, and dartfmt won't automatically
 truncate the line.
+-->
 
+### 建议每行应保持在 80 个字符以下，除非代码有很高的可读性
+
+与 Dart [规则][dartstyle-80-chars] 有些许不同的是，在 Fuchsia 中允许一行超过 80 个字符，只要提高了代码可读性， 并且 `dartfmt` 命令不会自动断行
+
+<!-- 
 # Additional Usage Rules
 
 ## Repositories and Files
@@ -122,12 +132,37 @@ Dart_library("lib.settings") {
   ...
 }
 ```
+-->
 
+# 额外使用规则
+
+## 文件与库
+
+### 请遵循 [Fuchsia layer repository structure][Fuchsia-directory-style].
+
+### 在 `/lib` 和 `/public/lib` 中用 `lib.` 作为库的前缀
+
+#### 例如:
+```
+Dart_library("lib.settings") {
+  package_name = "lib.settings"
+  ...
+}
+```
+
+<!-- 
 ### PREFER minimizing the number of public members exposed in a package.
 This can be done by only making things public when needed, and keeping all
 implementation detail libraries in the `/src` directory. Assume anything
 public in the `lib` directory will be re-used.
+-->
 
+### 尽量最小化包中 public 成员
+
+仅将库中需要用到的成员标记为 public，并且保证库中全部具体实现的细节都在 `/src` 文件夹下面。假设在 `lib` 文件夹下全部 public 成员都可复用
+
+
+<!-- 
 ### CONSIDER exporting publicly visible classes in a single `.dart` file.
 
 For multiple classes that are used together but are in different files,
@@ -159,6 +194,38 @@ export 'src/veggies.dart' show Tomato;
 import 'package:plants/botanical_fruits.dart' show Orange;
 
 ```
+-->
+
+
+### 考虑在单个 .dart 文件中导出公开可见的类
+
+如果分布在多个文件内的类被同时使用，对于库的使用者来说，导入单个文件比多次导入更加便利。使用者可以随时使用 `show` 关键字来所缩小导入范围
+
+这样也对最小化可见成员有所帮助
+
+例如:
+``` dart
+/// In src/apple.dart
+class Apple {}
+
+/// In src/orange.dart
+class Orange {}
+
+/// In src/veggies.dart
+class Potato {}
+class Tomato {}
+
+/// In botanical_fruits.dart
+export 'src/apple.dart';
+export 'src/orange.dart';
+// Can also be: export 'src/veggies.dart' hide Potato;
+export 'src/veggies.dart' show Tomato;
+
+/// In squeezer.dart
+import 'package:plants/botanical_fruits.dart' show Orange;
+
+```
+
 
 ### DO import all files within a package using relative paths.
 
